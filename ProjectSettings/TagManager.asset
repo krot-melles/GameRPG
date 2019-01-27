@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - HitBox
+  - Obstacle
+  - Keybind
   layers:
   - Default
   - TransparentFX
@@ -42,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Odstacle
+    uniqueID: 282901449
+    locked: 0
+  - name: UI
+    uniqueID: 4217325299
     locked: 0
