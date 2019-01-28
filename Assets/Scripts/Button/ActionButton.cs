@@ -4,12 +4,34 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ActionButton : MonoBehaviour, IPointerClickHandler
+public class ActionButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IClickable
 {
     public IUseable MyUseable { get; set; }
+    [SerializeField]
+    private Text stackSize;
+
+    private Stack<IUseable> useables = new Stack<IUseable>();
+    private int count;
 
     public Button MyButton { get; private set; }
     public Image MyIcon { get => icon; set => icon = value; }
+
+    public int MyCount
+    {
+        get
+        {
+            return count;
+        }
+    }
+
+    public Text MyStackText
+    {
+        get
+        {
+
+            return stackSize;
+        }
+    }
 
     [SerializeField]
     private Image icon;
@@ -19,6 +41,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     {
         MyButton = GetComponent<Button>();
         MyButton.onClick.AddListener(OnClick);
+        InventoryScript.MyInstance.itemCountChangedEvent += new ItemCountChanged(UpdateItemCount);
     }
 
     // Update is called once per frame
@@ -29,11 +52,18 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
     public void OnClick()
     {
-        if (MyUseable != null)
+        if (HandScript.MyInstance.MyMoveable == null)
         {
-            MyUseable.Use();
-        
+            if (MyUseable != null)
+            {
+                MyUseable.Use();
+            }
+            if (useables != null && useables.Count > 0)
+            {
+                useables.Peek().Use();
+            }
         }
+
 
     }
     public void OnPointerClick(PointerEventData eventData)
@@ -55,7 +85,19 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
     public void SetUseable(IUseable useable)
     {
-        this.MyUseable = useable;
+
+        if (useable is Item)
+        {
+            useables = InventoryScript.MyInstance.GetUseables(useable);
+            count = useables.Count;
+            InventoryScript.MyInstance.FromSlot.MyIcon.color = Color.white;
+            InventoryScript.MyInstance.FromSlot = null;
+        }
+        else
+        {
+            this.MyUseable = useable;
+        }
+
         UpdateVisual();
     }
 
@@ -64,5 +106,46 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
         MyIcon.sprite = HandScript.MyInstance.Put().MyIcon;
         MyIcon.color = Color.white;
 
+        if (count > 1)
+        {
+            UIManager.MyInstance.UpdateStackSize(this);
+        }
+
+    }
+    public void UpdateItemCount(Item item)
+    {
+        if (item is IUseable && useables.Count > 0)
+        {
+            if (useables.Peek().GetType() == item.GetType())
+            {
+                useables = InventoryScript.MyInstance.GetUseables(item as IUseable);
+                count = useables.Count;
+
+                UIManager.MyInstance.UpdateStackSize(this);
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        IDescribable tmp = null;
+        if (MyUseable != null && MyUseable is IDescribable)
+        {
+            tmp = (IDescribable)MyUseable;
+           // UIManager.MyInstance.ShowTooltip(transform.position);
+        }
+        else if (useables.Count > 0)
+        {
+           // UIManager.MyInstance.ShowTooltip(transform.position);
+        }
+        if (tmp != null)
+        {
+            UIManager.MyInstance.ShowTooltip(transform.position, tmp);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIManager.MyInstance.HideTooltip();
     }
 }

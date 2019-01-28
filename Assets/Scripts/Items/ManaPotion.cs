@@ -16,4 +16,9 @@ public class ManaPotion : Item, IUseable
         }
 
     }
+    public override string GetDescription()
+    {
+
+        return base.GetDescription() + string.Format("\n<color=#d7d4ae>Применение:</color> Мгновенно \n<color=#d7d4ae>Востанавливает: </color><color=#dac644>{0}</color> <color=#d7d4ae>ед. маны</color>", mana);
+    }
 }

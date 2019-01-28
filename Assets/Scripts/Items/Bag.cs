@@ -29,11 +29,23 @@ public class Bag : Item, IUseable
             MyBagScript = Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
             MyBagScript.AddSlots(slots);
 
-            InventoryScript.MyInstance.AddBag(this);
+            if (MyBagButton == null)
+            {
+                InventoryScript.MyInstance.AddBag(this);
+            }
+            else
+            {
+                InventoryScript.MyInstance.AddBag(this, MyBagButton);
+            }
+
+
 
         }
 
     }
 
-
+    public override string GetDescription()
+    {
+        return base.GetDescription() + string.Format("\n<color=#d7d4ae>Ячеек:</color> <color=#dac644>{0}</color> <color=#d7d4ae>ед.\nИзготовлена с медвежей кожи.</color>",  slots);
+    }
 }

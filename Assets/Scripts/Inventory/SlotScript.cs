@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
+public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable, IPointerEnterHandler, IPointerExitHandler
 {
 
     private ObservableStack<Item> items = new ObservableStack<Item>();
@@ -107,8 +107,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     public void RemoveItem(Item item)
     {
         if (!IsEmpty)
-        {
-            MyItems.Pop();
+        {            
+            InventoryScript.MyInstance.OnItemCountChanged(MyItems.Pop());
         }
 
     }
@@ -117,6 +117,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     {
         if (MyItems.Count > 0)
         {
+            InventoryScript.MyInstance.OnItemCountChanged(MyItems.Pop());
             MyItems.Clear();
         }
     }
@@ -127,8 +128,19 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         {
             if (InventoryScript.MyInstance.FromSlot == null && !IsEmpty)
             {
-                HandScript.MyInstance.TakeMoveable(MyItem as IMoveable);
-                InventoryScript.MyInstance.FromSlot = this;
+                if (HandScript.MyInstance.MyMoveable !=null && HandScript.MyInstance.MyMoveable is Bag)
+                {
+                    if (MyItem is Bag)
+                    {
+                        InventoryScript.MyInstance.SwapBags(HandScript.MyInstance.MyMoveable as Bag, MyItem as Bag);
+                    }
+                }
+                else
+                {
+                    HandScript.MyInstance.TakeMoveable(MyItem as IMoveable);
+                    InventoryScript.MyInstance.FromSlot = this;
+                }
+
             }
             else if (InventoryScript.MyInstance.FromSlot == null && IsEmpty && HandScript.MyInstance.MyMoveable is Bag)
             {
@@ -235,5 +247,22 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     private void UpdateSlot()
     {
         UIManager.MyInstance.UpdateStackSize(this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!IsEmpty)
+        {
+            UIManager.MyInstance.ShowTooltip(transform.position, MyItem);
+        }
+       
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (IsEmpty)
+        {
+            UIManager.MyInstance.HideTooltip();
+        }
     }
 }

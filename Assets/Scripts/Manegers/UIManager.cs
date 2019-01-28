@@ -36,12 +36,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup spellBook;
 
+    [SerializeField]
+    private GameObject toolTip;
+
+
+    private Text toolTipText;
+
    
     private GameObject[] keyBindsButtons;
 
     private void Awake()
     {
         keyBindsButtons = GameObject.FindGameObjectsWithTag("Keybind");
+        toolTipText = toolTip.GetComponentInChildren<Text>();
     }
 
 
@@ -133,5 +140,14 @@ public class UIManager : MonoBehaviour
             clickable.MyStackText.color = new Color(0, 0, 0, 0);
         }
     }
-
+    public void ShowTooltip(Vector3 position, IDescribable description)
+    {
+        toolTip.SetActive(true);
+        toolTip.transform.position = position;
+        toolTipText.text = description.GetDescription();
+    }
+    public void HideTooltip()
+    {
+        toolTip.SetActive(false);
+    }
 }
