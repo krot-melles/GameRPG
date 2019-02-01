@@ -181,6 +181,10 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable, IPoin
             (MyItem as IUseable).Use();
 
         }
+        else if (MyItem is Armor)
+        {
+            (MyItem as Armor).Equip();
+        }
 
     }
     public bool StackItem(Item item)
@@ -253,7 +257,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable, IPoin
     {
         if (!IsEmpty)
         {
-            UIManager.MyInstance.ShowTooltip(transform.position, MyItem);
+            UIManager.MyInstance.ShowTooltip(new Vector2(1,0), transform.position, MyItem);
         }
        
     }

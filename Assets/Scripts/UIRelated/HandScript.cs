@@ -31,7 +31,11 @@ public class HandScript : MonoBehaviour
     void Start()
     {
         icon = GetComponent<Image>();
-        DeleteItem();
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject() && MyInstance.MyMoveable != null)
+        {
+            DeleteItem();
+        }
+    
     }
 
     // Update is called once per frame
@@ -59,22 +63,20 @@ public class HandScript : MonoBehaviour
     public void Drop()
     {
         MyMoveable = null;
-        icon.color = new Color(0, 0, 0, 0); 
+        icon.color = new Color(0, 0, 0, 0);
+        InventoryScript.MyInstance.FromSlot = null;
 
     }
-    private void DeleteItem()
+    public void DeleteItem()
     {
-        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject() && MyInstance.MyMoveable != null)
+
+        if (MyMoveable is Item && InventoryScript.MyInstance.FromSlot != null)
         {
-            if (MyMoveable is Item && InventoryScript.MyInstance.FromSlot != null)
-            {
-                (MyMoveable as Item).MySlot.Clear();
-            }
-
-            Drop();
-
-            InventoryScript.MyInstance.FromSlot = null;
-
+            (MyMoveable as Item).MySlot.Clear();
         }
+
+        Drop();
+
+        InventoryScript.MyInstance.FromSlot = null;
     }
 }

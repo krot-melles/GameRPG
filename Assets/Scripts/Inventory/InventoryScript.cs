@@ -103,24 +103,39 @@ public class InventoryScript : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.X))
         {
-            Armor armor = (Armor)Instantiate(items[3]);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Armor armor = (Armor)Instantiate(items[3]);
             AddItem(armor);
             Armor armor1 = (Armor)Instantiate(items[4]);
             AddItem(armor1);
             Armor armor2 = (Armor)Instantiate(items[5]);
             AddItem(armor2);
+            Armor armor6 = (Armor)Instantiate(items[6]);
+            AddItem(armor6);
+            Armor armor7 = (Armor)Instantiate(items[7]);
+            AddItem(armor7);
+            Armor armor8 = (Armor)Instantiate(items[8]);
+            AddItem(armor8);
+            Armor armor9 = (Armor)Instantiate(items[9]);
+            AddItem(armor9);
+            Armor armor10 = (Armor)Instantiate(items[10]);
+            AddItem(armor10);
+            Armor armor11 = (Armor)Instantiate(items[11]);
+            AddItem(armor11);
             Bag bag = (Bag)Instantiate(items[0]);
             bag.Initialize(16);
             AddItem(bag);
         }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ManaPotion mpotion = (ManaPotion)Instantiate(items[2]);
-            AddItem(mpotion);
-            HealthPotion hpotion = (HealthPotion)Instantiate(items[1]);
-            AddItem(hpotion);
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                ManaPotion mpotion = (ManaPotion)Instantiate(items[2]);
+                AddItem(mpotion);
+                HealthPotion hpotion = (HealthPotion)Instantiate(items[1]);
+                AddItem(hpotion);
+            }
         }
     }
 

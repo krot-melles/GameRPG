@@ -39,10 +39,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject toolTip;
 
+    [SerializeField]
+    private CharacterPanel charPanel;
 
     private Text toolTipText;
+    [SerializeField]
+    private RectTransform tooltipRect;
 
-   
+
     private GameObject[] keyBindsButtons;
 
     private void Awake()
@@ -78,6 +82,10 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             InventoryScript.MyInstance.OpenClose();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            charPanel.OpenClose();
         }
 
     }
@@ -136,12 +144,14 @@ public class UIManager : MonoBehaviour
         }
         if (clickable.MyCount == 0)
         {
-            clickable.MyIcon.color = new Color(0,0,0,0);
+            clickable.MyIcon.color = new Color(0, 0, 0, 0);
             clickable.MyStackText.color = new Color(0, 0, 0, 0);
         }
     }
-    public void ShowTooltip(Vector3 position, IDescribable description)
+    public void ShowTooltip(Vector2 pivot, Vector3 position, IDescribable description)
     {
+        tooltipRect.pivot = pivot;
+
         toolTip.SetActive(true);
         toolTip.transform.position = position;
         toolTipText.text = description.GetDescription();
@@ -149,5 +159,9 @@ public class UIManager : MonoBehaviour
     public void HideTooltip()
     {
         toolTip.SetActive(false);
+    }
+    public void RefreshTooltip(IDescribable description)
+    {
+        toolTipText.text = description.GetDescription();
     }
 }

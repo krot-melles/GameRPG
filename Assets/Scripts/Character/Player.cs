@@ -156,7 +156,7 @@ public class Player : Character
             attackRoutine = StartCoroutine(Attack(spellName));
         }
 
-        //Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);
+      //  Instantiate(spellPrefab[spellName], exitPoints[exitIndex].position, Quaternion.identity);
     }
 
      

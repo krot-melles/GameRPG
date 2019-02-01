@@ -64,6 +64,7 @@
     <Compile Include="Assets\Behaviour\SpellBehaviour.cs" />
     <Compile Include="Assets\Scripts\Button\ActionButton.cs" />
     <Compile Include="Assets\Scripts\Button\BagButton.cs" />
+    <Compile Include="Assets\Scripts\Button\CharButton.cs" />
     <Compile Include="Assets\Scripts\Button\IUseable.cs" />
     <Compile Include="Assets\Scripts\Button\LootButton.cs" />
     <Compile Include="Assets\Scripts\Button\SpellButton.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="Assets\Scripts\EnemyState\IState.cs" />
     <Compile Include="Assets\Scripts\Inventory\BagScript.cs" />
     <Compile Include="Assets\Scripts\Inventory\InventoryScript.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Loot.cs" />
+    <Compile Include="Assets\Scripts\Inventory\LootTable.cs" />
     <Compile Include="Assets\Scripts\Inventory\SlotScript.cs" />
     <Compile Include="Assets\Scripts\Items\Armor.cs" />
     <Compile Include="Assets\Scripts\Items\Bag.cs" />
@@ -103,8 +106,10 @@
     <Compile Include="Assets\Scripts\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Spell\SpellBook.cs" />
     <Compile Include="Assets\Scripts\Spell\SpellScript.cs" />
+    <Compile Include="Assets\Scripts\TileScripts\Glass.cs" />
     <Compile Include="Assets\Scripts\TileScripts\TreeTile.cs" />
     <Compile Include="Assets\Scripts\TileScripts\WaterTile.cs" />
+    <Compile Include="Assets\Scripts\UIRelated\CharacterPanel.cs" />
     <Compile Include="Assets\Scripts\UIRelated\HandScript.cs" />
     <Compile Include="Assets\Scripts\UIRelated\IClickable.cs" />
     <Compile Include="Assets\Scripts\UIRelated\IDescribable.cs" />

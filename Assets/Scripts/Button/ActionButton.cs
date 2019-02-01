@@ -140,7 +140,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         }
         if (tmp != null)
         {
-            UIManager.MyInstance.ShowTooltip(transform.position, tmp);
+            UIManager.MyInstance.ShowTooltip(new Vector2(1,0), transform.position, tmp);
         }
     }
 
